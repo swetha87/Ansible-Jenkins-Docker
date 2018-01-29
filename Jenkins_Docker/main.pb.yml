@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - vars.yml
+
+  roles:
+    - role: prepare
+      docker_version: "{{my_docker_version}}"
+      setup_script_md5_sum: no
+    - role: jenkins
+      version: "{{jenkins_version}}"
+      port: "{{jenkins_port}}"

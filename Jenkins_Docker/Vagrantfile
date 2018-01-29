@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
+  config.vm.box = "debian/jessie64"
+
+
+  config.vm.define "jenkins" do |server|
+    server.vm.hostname = "jenkins"
+    server.vm.network "private_network", ip: "192.168.200.10"
+
+    server.vm.provider "virtualbox" do |vb|
+      vb.memory = "256"
+    end
+
+    server.vm.provision "shell", inline: <<-SHELL
+      echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | tee -a /etc/apt/sources.list
+      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+      apt-get update
+      apt-get install ansible -y
+    SHELL
+  end
+
+
+
+
+end
+

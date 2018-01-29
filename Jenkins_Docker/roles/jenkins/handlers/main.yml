@@ -1,0 +1,18 @@
+---
+# handlers file for jenkins
+
+- name: restart jenkins container
+  become: true
+  docker_container:
+    name: jenkins
+    image: jenkins
+    state: started
+    detach: true
+    restart: yes
+    restart_policy: always
+    ports:
+      - "{{port}}:8080"
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '{{volume_name}}:/var/jenkins_home'
+  listen: "restart jenkins"

@@ -1,0 +1,7 @@
+---
+# vars file for jenkins
+version: "lts"
+port: 8080
+volume_name: "jenkins"
+docker_cli_version: "17.12.0-ce"
+docker_compose_version: 1.16.1

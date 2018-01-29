@@ -1,0 +1,4 @@
+---
+- src: mongrelion.docker
+- src: geerlingguy.docker
+  version: 2.1.0

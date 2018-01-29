@@ -1,0 +1,25 @@
+---
+# tasks file for jenkins
+
+- name: pull jenkins image
+  command: "docker pull jenkins/jenkins:{{jenkins_version}}"
+
+- name: check if jenkins volume exists
+  command: docker volume inspect {{volume_name}}
+  register: jenkins_volume_exists
+  failed_when: false
+
+- name: create jenkins volume
+  command: docker volume create --name {{volume_name}}
+  when: jenkins_volume_exists|failed
+
+- name: Render jenkins Dockerfile
+  template:
+    src: ../templates/j2.Dockerfile
+    dest: /tmp/Dockerfile
+
+- name: Build jenkins image
+  become: true
+  command: docker build --pull --rm -t jenkins /tmp
+  notify: "restart jenkins"
+

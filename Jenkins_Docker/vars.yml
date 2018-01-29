@@ -1,0 +1,4 @@
+---
+my_docker_version: "17.12"
+jenkins_version: "lts"
+jenkins_port: 8081
